@@ -1,5 +1,5 @@
 // import { add } from "./add.ts";
-import { Rhum } from "https://deno.land/x/rhum@v1.1.2/mod.ts";
+import { Rhum } from "https://deno.land/x/rhum@v1.1.9/mod.ts";
 
 // Create a test plan for our `add.ts` file.
 Rhum.testPlan("main.ts", () => {
