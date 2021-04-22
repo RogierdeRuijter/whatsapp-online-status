@@ -1,29 +1,81 @@
 import { MongoClient } from "https://deno.land/x/mongo@v0.22.0/mod.ts";
 
-class DB {
+export class DB {
   public client: MongoClient;
-  constructor(public dbName: string, public url: string) {
-    this.dbName = dbName;
-    this.url = url;
+
+  private dbName: string;
+  private dbUsername: string;
+  private dbPassword: string;
+  private dbUrl1: string;
+  private dbUrl2: string;
+  private dbUrl3: string;
+  
+  constructor() {
+    this.dbName = Deno.env.get("DB_NAME") || '';
+    if (!this.dbName) {
+      throw new Error('db name should be defined')
+    }
+
+    this.dbUsername = Deno.env.get("DB_USERNAME") || '';
+    if (!this.dbUsername) {
+      throw new Error('db username should be defined')
+    }
+
+    this.dbPassword = Deno.env.get("DB_PASSWORD") || '';
+    if (!this.dbPassword) {
+      throw new Error('db password should be defined')
+    }
+    
+    this.dbUrl1 = Deno.env.get("DB_URL_1") || '';
+    if (!this.dbPassword) {
+      throw new Error('db url 1 should be defined')
+    }
+
+    this.dbUrl2 = Deno.env.get("DB_URL_2") || '';
+    if (!this.dbPassword) {
+      throw new Error('db url 2 should be defined')
+    }
+
+    this.dbUrl3 = Deno.env.get("DB_URL_3") || '';
+    if (!this.dbPassword) {
+      throw new Error('db url 3 should be defined')
+    }
+
     this.client = {} as MongoClient;
   }
 
   async connect() {
     const client = new MongoClient();
-    await client.connect(this.url);
-    this.client = client;
-  }
 
-  get getDatabase() {
-    return this.client.database(this.dbName);
+    await client.connect({
+      db: this.dbName,
+      tls: true,
+      servers: [
+        {
+          host: this.dbUrl2,
+          port: 27017,
+        },
+        {
+          host: this.dbUrl1,
+          port: 27017,
+        },
+        {
+          host: this.dbUrl3,
+          port: 27017,
+        }
+      ],
+      credential: {
+        username: this.dbUsername,
+        password: this.dbPassword,
+        db: this.dbName,
+        mechanism: "SCRAM-SHA-1",
+      },
+    });
+
+    this.client = client;
   }
 }
 
-const dbName = Deno.env.get("DB_NAME") || "contactdb";
-const dbHostUrl = Deno.env.get("DB_HOST_URL") || "mongodb://localhost:27017";
-// console.log(dbName, dbHostUrl)
-
-const db = new DB(dbName, dbHostUrl);
-await db.connect();
+const db = new DB();
 
 export default db;
