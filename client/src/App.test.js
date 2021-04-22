@@ -21,7 +21,7 @@ test('should display a congrats message if the sign was succesful', async () => 
   expect(button).toBeDisabled();
 
   expect(await screen.findByText('Thanks for signing the petition!')).toBeInTheDocument();
-  expect(await screen.queryByText('You are currently not able to sign the petition, because an error occured.')).not.toBeInTheDocument();
+  expect(screen.queryByText('You are currently not able to sign the petition, because an error occured.')).not.toBeInTheDocument();
   expect(button).toBeDisabled();
 });
 
@@ -60,7 +60,7 @@ test('should display the congrats message when retry button is clicked', async (
   expect(screen.queryByText('You are currently not able to sign the petition, because an error occured.')).not.toBeInTheDocument();
 
   expect(await screen.findByText('Thanks for signing the petition!')).toBeInTheDocument();
-  expect(await screen.queryByText('You are currently not able to sign the petition, because an error occured.')).not.toBeInTheDocument();
+  expect(screen.queryByText('You are currently not able to sign the petition, because an error occured.')).not.toBeInTheDocument();
   expect(screen.getByText('Retry')).toBeInTheDocument();
   expect(retryButton).toBeDisabled();
 });
