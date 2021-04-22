@@ -5,24 +5,20 @@ import { signPetition } from "./controllers.ts";
 import db from "./db.ts";
 import { abcCors } from "https://deno.land/x/cors/mod.ts";
 
-async function main() {
-  const app = new Application();
-  
-  await db.connect();
+const app = new Application();
 
-  app.use(abcCors({
-    origin: "http://localhost:5000"
-  }))
+await db.connect();
 
-  app
+app.use(abcCors({
+  origin: "http://localhost:5000"
+}))
+
+app
   .use(LogMiddleware)
   .use(ErrorMiddleware);
 
-  app
-    .post("/sign", signPetition)
-    .start({ port: 3000 });
-    
-  console.log(`server listening on http://localhost:3000`);
-}
-
-main();
+app
+  .post("/sign", signPetition)
+  .start({ port: 3000 });
+  
+console.log(`server listening on http://localhost:3000`);

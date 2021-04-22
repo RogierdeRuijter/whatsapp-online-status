@@ -17,17 +17,17 @@ export const signPetition: HandlerFunc = async (c: Context): Promise<any> => {
     //   throw new ErrorHandler("Request body can not be empty!", 400);
     // }
 
-  // const { name, age, email, address } = body;
+    // const { name, age, email, address } = body;
 
-  const database = db.client.database("whatsapp-petition");
+    const database = db.getDatebase("whatsapp-petition");
 
-  const signatures = database.collection<Signature>("signatures");
+    const signatures = database.collection<Signature>("signatures");
 
-  const insertedSignature = await signatures.insertOne({
-    timestamp: new Date()
-  });
+    const insertedSignature = await signatures.insertOne({
+      timestamp: new Date()
+    });
 
-  return c.json(insertedSignature, 201);
+    return c.json(insertedSignature, 201);
   } catch (error) {
     throw new ErrorHandler(error.message, error.status || 500);
   }

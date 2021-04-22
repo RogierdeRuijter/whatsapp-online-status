@@ -74,6 +74,10 @@ export class DB {
 
     this.client = client;
   }
+
+  public getDatebase(databaseName: string) {
+    return this.client.database(databaseName);
+  }
 }
 
 const db = new DB();
