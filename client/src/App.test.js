@@ -12,7 +12,9 @@ test('should show the description of the petition', () => {
 });
 
 test('should display a congrats message if the sign was succesful', async () => {
-  fetch.mockResponse({});
+  fetch.mockResponse(
+    () => new Promise(resolve => setTimeout(() => resolve({}), 10))
+  );
 
   render(App);
 
@@ -39,7 +41,7 @@ test('should display an error message to the user if the api returns an error', 
   expect(screen.queryByText('Sign')).not.toBeInTheDocument();
 });
 
-test('should display the congrats message when retry button is clicked', async () => {
+test.only('should display the congrats message when retry button is clicked', async () => {
   render(App);
   
   fetch.mockRejectOnce(new Error('Network Error'));
@@ -53,9 +55,11 @@ test('should display the congrats message when retry button is clicked', async (
   expect(retryButton).toBeInTheDocument();
   expect(screen.queryByText('Sign')).not.toBeInTheDocument();
 
-  fetch.mockResponseOnce({});
+  fetch.mockResponseOnce(
+    () => new Promise(resolve => setTimeout(() => resolve({}), 10))
+  );
+
   await userEvent.click(retryButton);
-  // Would be really good if the API call could mock taking 100ms than testing these loading states would be easier to read
   expect(retryButton).toBeDisabled();
   expect(screen.queryByText('You are currently not able to sign the petition, because an error occured.')).not.toBeInTheDocument();
 
