@@ -41,7 +41,7 @@ test('should display an error message to the user if the api returns an error', 
   expect(screen.queryByText('Sign')).not.toBeInTheDocument();
 });
 
-test.only('should display the congrats message when retry button is clicked', async () => {
+test('should display the congrats message when retry button is clicked', async () => {
   render(App);
   
   fetch.mockRejectOnce(new Error('Network Error'));
