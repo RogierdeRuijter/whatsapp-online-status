@@ -1,10 +1,15 @@
 <script>
-	export let name;
+	function handleClick(event) {
+		fetch('http://localhost:3000/sign', {
+			method: "POST"
+		}).then(response => {
+			console.log(response);
+		})
+	}
 </script>
 
 <main>
-	<h1>Hello {name}!</h1>
-	<p>Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn how to build Svelte apps.</p>
+	<button on:click={handleClick}>Sign</button>
 </main>
 
 <style>

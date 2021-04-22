@@ -6,7 +6,7 @@ interface Signature {
    timestamp: string;
 }
 
-export const signPetition: HandlerFunc = async (c: Context) => {
+export const signPetition: HandlerFunc = async (c: Context): Promise<any> => {
   try {
     // if (c.request.headers.get("content-type") !== "application/json") {
     //   throw new ErrorHandler("Invalid body", 422);
