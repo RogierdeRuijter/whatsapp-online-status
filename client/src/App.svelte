@@ -9,6 +9,7 @@
 </script>
 
 <main>
+	<p>This is a petition for creating an option within whatsapp to remove the online status</p>
 	<button on:click={handleClick}>Sign</button>
 </main>
 
