@@ -17,20 +17,43 @@ test('should display a congrats message if the sign was succesful', async () => 
   render(App);
 
   const button = screen.getByText('Sign');
-
   await userEvent.click(button);
 
   expect(await screen.findByText('Thanks for signing the petition!')).toBeInTheDocument();
-})
+  expect(button).toBeDisabled();
+});
 
 test('should display an error message to the user if the api returns an error', async () => {
-  fetch.mockReject(new Error('Network Error'));
+  fetch.mockRejectOnce(new Error('Network Error'));
 
   render(App);
 
   const button = screen.getByText('Sign');
-
   await userEvent.click(button);
 
-  expect(await screen.findByText('An error occured you are currently not able to sign the petition.')).toBeInTheDocument();
-})
+  expect(await screen.findByText('You are currently not able to sign the petition, because an error occured.')).toBeInTheDocument();
+  expect(screen.getByText('Retry')).toBeInTheDocument();
+  expect(button).not.toBeInTheDocument();
+});
+
+test('should display the congrats message when retry button is clicked', async () => {
+  render(App);
+  
+  fetch.mockRejectOnce(new Error('Network Error'));
+  const button = screen.getByText('Sign');
+  await userEvent.click(button);
+
+  expect(await screen.findByText('You are currently not able to sign the petition, because an error occured.')).toBeInTheDocument();
+  
+  const retryButton = screen.getByText('Retry'); 
+  expect(retryButton).toBeInTheDocument();
+  expect(button).not.toBeInTheDocument();
+
+  fetch.mockResponseOnce({});
+  await userEvent.click(retryButton);
+
+  expect(await screen.findByText('Thanks for signing the petition!')).toBeInTheDocument();
+  expect(await screen.queryByText('You are currently not able to sign the petition, because an error occured.')).not.toBeInTheDocument();
+
+});
+

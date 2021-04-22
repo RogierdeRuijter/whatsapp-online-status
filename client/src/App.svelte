@@ -3,24 +3,33 @@
 	let error = false;
 	// TODO: Add error handling here
 	function handleClick() {
+		signed = false;
+		error = false;
+
 		fetch('http://localhost:3000/sign', {
 			method: "POST"
-		}).then(response => {
+		}).then(() => {
 			signed = true;
 		}).catch(() => {
 			error = true;
-		})
+		});
 	}
 </script>
 
 <main>
 	<p>This is a petition for creating an option within whatsapp to remove the online status</p>
-	<button on:click={handleClick}>Sign</button>
+	<button on:click={handleClick} disabled={signed}>
+		{#if !error}
+			Sign
+		{:else}
+			Retry
+		{/if}
+	</button>
 	{#if signed}
 		<p>Thanks for signing the petition!</p>
 	{/if}
 	{#if error}
-		<p>An error occured you are currently not able to sign the petition.</p>
+		<p>You are currently not able to sign the petition, because an error occured.</p>
 	{/if}
 </main>
 
