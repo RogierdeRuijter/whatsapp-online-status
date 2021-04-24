@@ -17,6 +17,7 @@
     "@testing-library/svelte": "^3.0.3",
     "@testing-library/user-event": "^13.1.5",
     "jest": "^26.6.3",
+    "jest-canvas-mock": "^2.3.1",
     "jest-fetch-mock": "^3.0.3",
     "prettier": "^2.2.1",
     "rollup": "^2.3.4",
@@ -42,7 +43,8 @@
       "svelte"
     ],
     "setupFiles": [
-      "./setupJest.js"
+      "./setupJest.js",
+      "jest-canvas-mock"
     ],
     "setupFilesAfterEnv": [
       "@testing-library/jest-dom/extend-expect"

@@ -1,6 +1,11 @@
 <script>
 	import SignButton from './SignButton/SignButton.svelte';
-	import { signedStore, errorStore } from './store.js'
+	import { signedStore, genericErrorStore, alreadySignedErrorStore } from './store.js'
+
+	var allcookies = document.cookie;
+	var arrayb = allcookies.split(";");
+	
+	$signedStore = arrayb[0].includes('signed=true');
 </script>
 
 <main>
@@ -11,8 +16,11 @@
 	{#if $signedStore}
 		<p class="bold">Thanks for signing the petition!</p>
 	{/if}
-	{#if $errorStore}
+	{#if $genericErrorStore}
 		<p class="bold">You are currently not able to sign the petition, because an error occured.</p>
+	{/if}
+	{#if $alreadySignedErrorStore}
+		<p class="bold">You have already signed the petition, you can't sign it again, you sneaky bastard :)</p>
 	{/if}
 </main>
 
