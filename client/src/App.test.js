@@ -4,6 +4,12 @@ import userEvent from '@testing-library/user-event'
 import { screen } from '@testing-library/dom'
 
 import App from './App.svelte'
+import { signedStore, errorStore } from './store.js'
+
+beforeEach(() => {
+  signedStore.set(false);
+  errorStore.set(false);
+});
 
 test('should show the description of the petition', () => {
   render(App);
@@ -13,7 +19,7 @@ test('should show the description of the petition', () => {
 
 test('should display a congrats message if the sign was succesful', async () => {
   fetch.mockResponse(
-    () => new Promise(resolve => setTimeout(() => resolve({}), 10))
+    new Promise(resolve => setTimeout(() => resolve({}), 10))
   );
 
   render(App);
@@ -56,7 +62,7 @@ test('should display the congrats message when retry button is clicked', async (
   expect(screen.queryByText('Sign')).not.toBeInTheDocument();
 
   fetch.mockResponseOnce(
-    () => new Promise(resolve => setTimeout(() => resolve({}), 10))
+    new Promise(resolve => setTimeout(() => resolve({}), 10))
   );
 
   await userEvent.click(retryButton);
@@ -68,4 +74,3 @@ test('should display the congrats message when retry button is clicked', async (
   expect(screen.getByText('Retry')).toBeInTheDocument();
   expect(retryButton).toBeDisabled();
 });
-

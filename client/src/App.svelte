@@ -1,43 +1,17 @@
 <script>
-	let signed = false;
-	let error = false;
-	let showRetryLabel = false;
-	let loading = false;
-
-	function handleClick() {
-		loading = true;
-		error = false;
-
-		fetch('http://localhost:3000/sign', {
-			method: "POST"
-		}).then(() => {
-			error = false;
-			signed = true;
-		}).catch(() => {
-			signed = false;
-			error = true;
-			showRetryLabel = true;
-		}).finally(() => {
-			loading = false;
-		});
-	}
+	import SignButton from './SignButton/SignButton.svelte';
+	import { signedStore, errorStore } from './store.js'
 </script>
 
 <main>
 	<p>This is a petition for creating an option within whatsapp to remove the online status</p>
 	
-	<button on:click={handleClick} disabled={signed || loading}>
-		{#if showRetryLabel}
-			Retry
-		{:else}
-			Sign
-		{/if}
-	</button>
+	<SignButton />
 
-	{#if signed}
+	{#if $signedStore}
 		<p class="bold">Thanks for signing the petition!</p>
 	{/if}
-	{#if error}
+	{#if $errorStore}
 		<p class="bold">You are currently not able to sign the petition, because an error occured.</p>
 	{/if}
 </main>

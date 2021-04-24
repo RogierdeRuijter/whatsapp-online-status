@@ -18,6 +18,7 @@ app
   .use(ErrorMiddleware);
 
 app
+  .options("/sign", (c: any) => c, abcCors())
   .post("/sign", signPetition)
   .start({ port: 3000 });
   
