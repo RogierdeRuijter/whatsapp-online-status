@@ -10,7 +10,8 @@ const app = new Application();
 await db.connect();
 
 app.use(abcCors({
-  origin: "http://localhost:5000"
+  origin: "http://localhost:5000",
+  credentials: true
 }))
 
 app
@@ -18,7 +19,10 @@ app
   .use(ErrorMiddleware);
 
 app
-  .options("/sign", (c: any) => c, abcCors())
+  .options("/sign", (c: any) => c, abcCors({
+    origin: "http://localhost:5000",
+    credentials: true
+  }))
   .post("/sign", signPetition)
   .start({ port: 3000 });
   

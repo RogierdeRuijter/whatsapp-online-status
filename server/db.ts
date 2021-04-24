@@ -55,14 +55,15 @@ export class DB {
           host: this.dbUrl2,
           port: 27017,
         },
-        {
-          host: this.dbUrl1,
-          port: 27017,
-        },
-        {
-          host: this.dbUrl3,
-          port: 27017,
-        }
+        // This causes errors when it is in there that the wrong db is targeted
+        // {
+        //   host: this.dbUrl1,
+        //   port: 27017,
+        // },
+        // {
+        //   host: this.dbUrl3,
+        //   port: 27017,
+        // }
       ],
       credential: {
         username: this.dbUsername,
