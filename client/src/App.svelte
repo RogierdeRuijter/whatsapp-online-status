@@ -1,10 +1,21 @@
 <script>
 	import SignButton from './SignButton/SignButton.svelte';
 	import { signedStore, genericErrorStore, alreadySignedErrorStore } from './store.js'
+	import websocketStore from "svelte-websocket-store";
+
+	const initialValue = { };
+	export const myStore = websocketStore("ws://localhost:8080", initialValue);
+
+	// send JSON to websocket server
+	// $myStore = { content: "to be saved", other_values: "all" };
+
+	// receive JSON from server (push)
+	let response = $myStore;
+	console.log('response');
+	console.log(response);
 
 	var allcookies = document.cookie;
 	var arrayb = allcookies.split(";");
-	
 	$signedStore = arrayb[0].includes('signed=true');
 </script>
 
@@ -22,6 +33,8 @@
 	{#if $alreadySignedErrorStore}
 		<p class="bold">You have already signed the petition, you can't sign it again, you sneaky bastard :)</p>
 	{/if}
+
+	<p>Total amount of votes: {$myStore.count}</p>
 </main>
 
 <style>

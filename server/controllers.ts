@@ -3,13 +3,33 @@ import db from './db.ts';
 import { ErrorHandler } from "./middlewares.ts"
 import { setCookie } from "https://deno.land/std/http/cookie.ts";
 
+// setInterval(async() => {
+//     const database = db.getDatebase("whatsapp-petition");
+//     const signatures = database.collection<Signature>("signatures");
+
+//     console.log(await signatures.count({}));
+// }, 5000); 
+
 interface Body {
   visitorId: string;
 }
 
-interface Signature {
+export interface Signature {
    timestamp: string;
    visitorId: string;
+}
+
+const setSignedCookie = (context: Context) => {
+  const date = new Date();
+  setCookie(context.response, {
+    name: "signed", 
+    value: 'true',
+    expires: new Date(date.setFullYear(date.getFullYear() + 1)),
+    domain: 'localhost',
+    secure: false,
+    sameSite: 'Strict',
+    path: '/'
+  });
 }
 
 export const signPetition: HandlerFunc = async (c: Context): Promise<any> => {
@@ -34,12 +54,13 @@ export const signPetition: HandlerFunc = async (c: Context): Promise<any> => {
     const signatures = database.collection<Signature>("signatures");
 
     // Not worried about scallability here since the db handles this query
+    // If this every gets slow indexing the database should be the solution to make it faster
     const signatuesWithCurrentFingerprint = await signatures.find(
       { visitorId: { $eq: visitorId } }, { noCursorTimeout:false } as any
     ).toArray();
 
     if (signatuesWithCurrentFingerprint.length > 0) {
-      // TODO: set cookie signed here
+      setSignedCookie(c);
       throw new ErrorHandler("User has already signed the petition", 403)
     }
 
@@ -48,16 +69,7 @@ export const signPetition: HandlerFunc = async (c: Context): Promise<any> => {
       visitorId
     });
     
-    const date = new Date();
-    setCookie(c.response, {
-                name: "signed", 
-                value: 'true',
-                expires: new Date(date.setFullYear(date.getFullYear() + 1)),
-                domain: 'localhost',
-                secure: false,
-                sameSite: 'Strict',
-                path: '/'
-              });
+    setSignedCookie(c);
 
     return c.json('Succesfull', 201);
   } catch (error) {
