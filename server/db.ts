@@ -9,36 +9,36 @@ export class DB {
   private dbUrl1: string;
   private dbUrl2: string;
   private dbUrl3: string;
-  
+
   constructor() {
-    this.dbName = Deno.env.get("DB_NAME") || '';
+    this.dbName = Deno.env.get("DB_NAME") || "";
     if (!this.dbName) {
-      throw new Error('db name should be defined')
+      throw new Error("db name should be defined");
     }
 
-    this.dbUsername = Deno.env.get("DB_USERNAME") || '';
+    this.dbUsername = Deno.env.get("DB_USERNAME") || "";
     if (!this.dbUsername) {
-      throw new Error('db username should be defined')
+      throw new Error("db username should be defined");
     }
 
-    this.dbPassword = Deno.env.get("DB_PASSWORD") || '';
+    this.dbPassword = Deno.env.get("DB_PASSWORD") || "";
     if (!this.dbPassword) {
-      throw new Error('db password should be defined')
-    }
-    
-    this.dbUrl1 = Deno.env.get("DB_URL_1") || '';
-    if (!this.dbPassword) {
-      throw new Error('db url 1 should be defined')
+      throw new Error("db password should be defined");
     }
 
-    this.dbUrl2 = Deno.env.get("DB_URL_2") || '';
+    this.dbUrl1 = Deno.env.get("DB_URL_1") || "";
     if (!this.dbPassword) {
-      throw new Error('db url 2 should be defined')
+      throw new Error("db url 1 should be defined");
     }
 
-    this.dbUrl3 = Deno.env.get("DB_URL_3") || '';
+    this.dbUrl2 = Deno.env.get("DB_URL_2") || "";
     if (!this.dbPassword) {
-      throw new Error('db url 3 should be defined')
+      throw new Error("db url 2 should be defined");
+    }
+
+    this.dbUrl3 = Deno.env.get("DB_URL_3") || "";
+    if (!this.dbPassword) {
+      throw new Error("db url 3 should be defined");
     }
 
     this.client = {} as MongoClient;
