@@ -46,12 +46,12 @@ setInterval(async () => {
 }, 5000);
 
 const wss = new WebSocketServer(8080);
-wss.on("connection", async (ws: WebSocketClient) => {
+wss.on("connection", (ws: WebSocketClient) => {
   ws.send(
     JSON.stringify({ count: totalAmountOfSignatures }),
   );
 
-  const interval = setInterval(async () => {
+  setInterval(() => {
     if (!ws.isClosed) {
       ws.send(
         JSON.stringify({ count: totalAmountOfSignatures }),
