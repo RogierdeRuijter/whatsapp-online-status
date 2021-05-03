@@ -14,4 +14,6 @@ beforeEach(() => {
 
 test('should display the first milestone', () => {
   render(Milestones);
+
+  expect(screen.getByText(''));
 });
