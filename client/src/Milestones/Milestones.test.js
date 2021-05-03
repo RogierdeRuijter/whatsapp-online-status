@@ -13,8 +13,8 @@ beforeEach(() => {
 });
 
 test('should display the first milestone', () => {
-  render(Milestones);
+  render(Milestones)
 
-  
-  expect(screen.getByText(''));
+
+  expect(screen.getByText(''))
 });
