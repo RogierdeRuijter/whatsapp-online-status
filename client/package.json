@@ -19,6 +19,8 @@
     "jest": "^26.6.3",
     "jest-canvas-mock": "^2.3.1",
     "jest-fetch-mock": "^3.0.3",
+    "jest-websocket-mock": "^2.2.0",
+    "mock-socket": "^9.0.3",
     "prettier": "^2.2.1",
     "rollup": "^2.3.4",
     "rollup-plugin-css-only": "^3.1.0",
@@ -37,11 +39,13 @@
     "automock": false,
     "transform": {
       "^.+\\.js$": "babel-jest",
-      "^.+\\.svelte$": "svelte-jester"
+      "^.+\\.svelte$": "svelte-jester",
+      "^.+\\.mjs$": "babel-jest"
     },
     "moduleFileExtensions": [
       "js",
-      "svelte"
+      "svelte",
+      "mjs"
     ],
     "setupFiles": [
       "./setupJest.js",

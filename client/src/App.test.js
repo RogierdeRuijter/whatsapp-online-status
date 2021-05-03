@@ -5,6 +5,7 @@ import { screen } from '@testing-library/dom'
 
 import App from './App.svelte'
 import { signedStore, genericErrorStore, alreadySignedErrorStore } from './store.js'
+// import WS from "jest-websocket-mock";
 
 beforeEach(() => {
   signedStore.set(false);
@@ -15,8 +16,16 @@ beforeEach(() => {
 test('should display the description of the petition', () => {
   render(App);
 
-  expect(screen.getByText('This is a petition for creating an option within whatsapp to remove the online status')).toBeInTheDocument()
+  expect(screen.getByText('This is a petition for creating an option within whatsapp to remove the online status')).toBeInTheDocument();
 });
+
+// test.only('should display the total amount of votes', async() => {
+//   const server = new WS("ws://localhost:8080");
+//   render(App);
+//   await server.connected;
+
+//   expect(screen.getByText('This is a petition for creating an option within whatsapp to remove the online status')).toBeInTheDocument()
+// });
 
 test('should display a congrats message if the sign was succesful', async () => {  
   render(App);
