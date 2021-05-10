@@ -8,7 +8,7 @@ import {
   signedStore,
   genericErrorStore,
   alreadySignedErrorStore,
-} from "./store.js";
+} from "../store.js";
 
 beforeEach(() => {
   signedStore.set(false);
@@ -16,7 +16,7 @@ beforeEach(() => {
   alreadySignedErrorStore.set(false);
 });
 
-test.only("should display a progress bar and milestone 1", () => {
+test.skip("should display a progress bar and milestone 1", () => {
   render(Milestones);
 
   expect(screen.getByText("Milestone"));
