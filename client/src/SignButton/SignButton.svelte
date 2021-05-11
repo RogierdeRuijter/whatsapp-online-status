@@ -58,9 +58,9 @@
 	const handleClick = async () => {
 		loading = true;
 		$genericErrorStore = false;
-		
+
 		// TODO: get canvas here and export it to data url and sent it to the backend
-		// canvas.toDataURL() 
+		// canvas.toDataURL()
 		// Maybe we need to raise the state to get canvas object here
 
 		const fpPromise = FingerprintJS.load();
