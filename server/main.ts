@@ -51,13 +51,13 @@ wss.on("connection", (ws: WebSocketClient) => {
     JSON.stringify({ count: totalAmountOfSignatures }),
   );
 
-  setInterval(() => {
+  const interval1 = setInterval(() => {
     if (!ws.isClosed) {
       ws.send(
         JSON.stringify({ count: totalAmountOfSignatures }),
       );
     } else {
-      clearInterval(interval);
+      clearInterval(interval1);
     }
   }, 5000);
 });
